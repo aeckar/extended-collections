@@ -27,6 +27,7 @@ kotlin {
     sourceSets {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(project(":test-shared"))
         }
     }
 }

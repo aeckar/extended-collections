@@ -26,6 +26,8 @@ this library builds upon the Kotlin Collections Framework by providing:
 
 among other utilities. The overall structure of the API is designed to be similar to that of the standard library,
 allowing for seamless integration into existing codebases.
-Additionally, its only dependency is [kotlinx.io](https://github.com/Kotlin/kotlinx-io/) and is designed with performance in mind.
+Additionally, the core library module holds no dependencies and is designed with performance in mind.
+The `io` module extends the functionality of the library by providing iterators over
+[kotlinx.io.RawSource](https://kotlin.github.io/kotlinx-io/kotlinx-io-core/kotlinx.io/-raw-source/index.html).
 
 The full online documentation can be found [here](https://aeckar.github.io/extended-collections/).
