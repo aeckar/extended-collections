@@ -1,7 +1,7 @@
 import io.github.aeckar.collections.*
 import io.github.aeckar.collections.Pivot
 import io.github.aeckar.collections.getOrInsert
-import io.github.aeckar.collections.pivot
+import io.github.aeckar.collections.pivots
 import kotlin.collections.reversed
 import kotlin.collections.toList
 import kotlin.test.Test
@@ -58,7 +58,7 @@ class ListNodeTests {
 
     @Test
     fun `forward list traversal`() {
-        val linkedList = linkedListOf(simpleListNode(), 0, 1, 2)
+        val linkedList = link(simpleListNode(), 0, 1, 2)
         for ((index, node) in linkedList.withIndex()) {
             assertEquals(node.ordinal, index)
         }
@@ -84,7 +84,7 @@ class ListNodeTests {
 
     @Test
     fun `forward search or last`() {
-        linkedListOf(pivot(), 1 to "first", 2 to "second", 3 to "third", 4 to "fourth").head().apply {
+        link(pivots(), 1 to "first", 2 to "second", 3 to "third", 4 to "fourth").head().apply {
             assertEquals("second", seek { it.position == 2 }.value)
             assertEquals("third", seek { it.position == 3 }.value)
             assertEquals("fourth", seek { false }.value)
@@ -94,7 +94,7 @@ class ListNodeTests {
 
     @Test
     fun `backward search or last`() {
-        linkedListOf(pivot(), 1 to "first", 2 to "second", 3 to "third", 4 to "fourth").tail().apply {
+        link(pivots(), 1 to "first", 2 to "second", 3 to "third", 4 to "fourth").tail().apply {
             assertEquals("third", backtrace { it.position == 3 }.value)
             assertEquals("second", backtrace { it.position == 2 }.value)
             assertEquals("first", backtrace { false }.value)
@@ -105,7 +105,7 @@ class ListNodeTests {
     fun `convert to list`() {
         assertContentEquals(
             expected = listOf(0, 1, 2),
-            actual = linkedListOf(simpleListNode(), 0, 1, 2).toList().map { it.ordinal }
+            actual = link(simpleListNode(), 0, 1, 2).toList().map { it.ordinal }
         )
     }
 }

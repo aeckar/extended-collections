@@ -2,6 +2,11 @@ package io.github.aeckar.collections
 
 import io.github.aeckar.collections.utils.checkBounds
 
+/*
+    Specialized forEach() doesn't make sense for revertible, pivoting iterators
+    since they are typically stored to a variable.
+ */
+
 // ------------------------------ factories ------------------------------
 
 /**
@@ -17,7 +22,7 @@ public fun String.revertibleIterator(): CharRevertibleIterator<Int> = StringReve
 /**
  * Returns an iterator pivoting over the elements in the list.
  */
-public fun <E, H> List<E>.pivotIterator(init: () -> H): PivotIterator<E, Int, H> {
+public fun <E, H> List<E>.pivotIterator(init: (Int) -> H): PivotIterator<E, Int, H> {
     val revertible = ListRevertibleIterator(this)
     return object : AbstractPivotIterator<E, Int, H>(
         revertible,
@@ -28,18 +33,21 @@ public fun <E, H> List<E>.pivotIterator(init: () -> H): PivotIterator<E, Int, H>
 /**
  * Returns an iterator pivoting over the characters in this string.
  */
-public fun <H> String.pivotIterator(init: () -> H): CharPivotIterator<Int, H> {
+public fun <H> String.pivotIterator(init: (Int) -> H): CharPivotIterator<Int, H> {
     val revertible = StringRevertibleIterator(this)
     return object : AbstractPivotIterator<Char, Int, H>(
         revertible,
         init
-    ), CharPivotIterator<Int, H>, CharRevertibleIterator<Int> by revertible {}
+    ), CharPivotIterator<Int, H>, CharRevertibleIterator<Int> by revertible {
+        override fun peek() = revertible.peek() // Silences compiler warning
+    }
 }
 
 // ------------------------------ revertible iterators ------------------------------
 
 /**
  * A sequence of elements whose position can be saved and reverted to later.
+ * @sample io.github.aeckar.collections.samples.revertibleIterator
  */
 public interface RevertibleIterator<out E, out P> : Iterator<E> {
     /**
@@ -183,6 +191,10 @@ internal class StringRevertibleIterator(
 
 /**
  * A revertible iterator over a sequence of elements, each of which is assigned some value.
+ *
+ * Use when it is necessary to map both positional data and metadata to elements in a sequence
+ * by using revertible iteration.
+ * @sample io.github.aeckar.collections.samples.pivotIterator
  */
 public interface PivotIterator<out E, P : Comparable<P>, out V> : RevertibleIterator<E, P> {
     /**
@@ -198,7 +210,7 @@ public interface PivotIterator<out E, P : Comparable<P>, out V> : RevertibleIter
     public fun pivots(): List<Pivot<P, V>>
 }
 
-/**getNode
+/**
  * An iterator pivoting over a sequence of characters.
  */
 public interface CharPivotIterator<P : Comparable<P>, out V> : PivotIterator<Char, P, V>, CharRevertibleIterator<P>
@@ -211,12 +223,14 @@ public interface CharPivotIterator<P : Comparable<P>, out V> : PivotIterator<Cha
 @Suppress("EqualsOrHashCode")
 public abstract class AbstractPivotIterator<out E, P : Comparable<P>, out V>(
     private val revertible: RevertibleIterator<E, P>,
-    private val init: () -> V
+    private val init: (P) -> V
 ) : PivotIterator<E, P, V>, RevertibleIterator<E, P> {
     private var cursor: Pivot<P, V>? = null
 
     final override fun here(): V {
-        val node = cursor?.getOrInsert(revertible.position()) { init() } ?: Pivot(revertible.position(), init())
+        val position = revertible.position()
+        val node = cursor?.getOrInsert(revertible.position()) { init(position) }
+            ?: Pivot(revertible.position(), init(position))
         this.cursor = node
         return node.value
     }

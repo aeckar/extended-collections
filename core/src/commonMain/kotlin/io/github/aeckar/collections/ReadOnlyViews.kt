@@ -3,7 +3,7 @@ package io.github.aeckar.collections
 // ------------------------------ factories ------------------------------
 
 /**
- * Returns a read-only view of this list.
+ * Returns a read-only view over this list.
  */
 public fun <E> List<E>.readOnly(): ReadOnlyList<E> = ListView(this)
 
@@ -22,16 +22,17 @@ public fun <E> MultiSet<E>.readOnly(): ReadOnlyMultiSet<E> = MultiSetView(this)
  */
 public fun <K, V> Map<K, V>.readOnly(): ReadOnlyMap<K, V> = MapView(this)
 
+/**
+ * Returns a read-only view over this tree node.
+ */
+public fun <V> DataTreeNode<V>.readOnly(): ReadOnlyDataTreeNode<V> = DataTreeNodeView(this)
+
 // ------------------------------ interfaces ------------------------------
 
 /**
  * A read-only view of another sequence of elements.
  */
-public sealed interface ReadOnlyCollection<E> : Collection<E> {
-    override fun toString(): String
-    override fun equals(other: Any?): Boolean
-    override fun hashCode(): Int
-}
+public sealed interface ReadOnlyCollection<E> : Collection<E>
 
 /**
  * A read-only view of another list.
@@ -55,6 +56,11 @@ public sealed interface ReadOnlyMultiSet<E> : MultiSet<E>, ReadOnlySet<E>
  */
 public sealed interface ReadOnlyMap<K, V> : Map<K, V>
 
+/**
+ * A read-only view over another tree node.
+ */
+public sealed interface ReadOnlyDataTreeNode<V> : ValueTreeNode<V>
+
 // ------------------------------ implementations ------------------------------
 
 private abstract class View {
@@ -65,12 +71,16 @@ private abstract class View {
     final override fun hashCode() = original.hashCode()
 }
 
-private class ListView<E>(override val original: List<E>) : View(), ReadOnlyList<E>, List<E> by original {
+private data class SetView<E>(override val original: Set<E>) : View(), ReadOnlySet<E>, Set<E> by original
+private class MultiSetView<E>(override val original: MultiSet<E>) : View(), ReadOnlyMultiSet<E>, MultiSet<E> by original
+private class MapView<K, V>(override val original: Map<K, V>) : View(), ReadOnlyMap<K, V>, Map<K, V> by original
+
+private data class ListView<E>(override val original: List<E>) : View(), ReadOnlyList<E>, List<E> by original {
     override fun subList(fromIndex: Int, toIndex: Int): ReadOnlyList<E> {
         return original.subList(fromIndex, toIndex).readOnly()
     }
 }
 
-private class SetView<E>(override val original: Set<E>) : View(), ReadOnlySet<E>, Set<E> by original
-private class MultiSetView<E>(override val original: MultiSet<E>) : View(), ReadOnlyMultiSet<E>, MultiSet<E> by original
-private class MapView<K, V>(override val original: Map<K, V>) : View(), ReadOnlyMap<K, V>, Map<K, V> by original
+private class DataTreeNodeView<out V>(
+    override val original: DataTreeNode<V>
+) : View(), ReadOnlyDataTreeNode<@UnsafeVariance V>, ValueTreeNode<V> by original

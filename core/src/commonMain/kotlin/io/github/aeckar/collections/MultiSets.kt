@@ -68,6 +68,7 @@ public fun <E> mutableMultiSetOf(vararg elements: E): MutableMultiSet<E> {
  *
  * Because duplicated elements are equivalent, they are discarded after they are counted.
  * To preserve duplicated elements, a set of lists should be used instead.
+ * @sample io.github.aeckar.collections.samples.multiSet
  */
 public interface MultiSet<E> : Set<E> {
     /**

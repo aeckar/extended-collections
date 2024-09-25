@@ -2,15 +2,17 @@
 
 package io.github.aeckar.collections
 
-//  Mutable iterators typically unnecessary, and especially for performance-sensitive applications
+// Immutable versions unnecessary, because performance impact is negligible
 
 private const val DEFAULT_SIZE = 10 // Default size of Java list
 private const val GROWTH_FACTOR = 2
 
+// TODO to value collections, read only and immutable forms
+
 /**
- * A list of unboxed values.
+ * A list of unboxed primitive values.
  */
-public interface ValueList {
+public interface PrimitiveList {
     /**
      * The number of elements in this list.
      */
@@ -20,7 +22,7 @@ public interface ValueList {
 /**
  * A list of unboxed Booleans.
  */
-public class BooleanList : ValueList, Iterable<Boolean> {
+public class BooleanList : PrimitiveList, Iterable<Boolean> {
     /**
      * The last element in this list.
      * @throws IllegalStateException stack is empty
@@ -77,7 +79,7 @@ public class BooleanList : ValueList, Iterable<Boolean> {
 /**
  * A list of unboxed integers.
  */
-public class IntList : ValueList, Iterable<Int> {
+public class IntList : PrimitiveList, Iterable<Int> {
     /**
      * The last element in this list.
      * @throws IllegalStateException stack is empty
@@ -134,7 +136,7 @@ public class IntList : ValueList, Iterable<Int> {
 /**
  * A list of unboxed long integers.
  */
-public class LongList : ValueList, Iterable<Long> {
+public class LongList : PrimitiveList, Iterable<Long> {
     /**
      * The last element in this list.
      * @throws IllegalStateException stack is empty
@@ -191,7 +193,7 @@ public class LongList : ValueList, Iterable<Long> {
 /**
  * A list of unboxed double-precision floats.
  */
-public class DoubleList : ValueList, Iterable<Double> {
+public class DoubleList : PrimitiveList, Iterable<Double> {
     /**
      * The last element in this list.
      * @throws IllegalStateException stack is empty

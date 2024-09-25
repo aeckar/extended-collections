@@ -1,6 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    id("multiplatform.targets")
+    id("multiplatform-targets")
 }
 
 kotlin {

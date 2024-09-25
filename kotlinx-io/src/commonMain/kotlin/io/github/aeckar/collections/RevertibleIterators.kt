@@ -39,7 +39,7 @@ public fun <V> RawSource.pivotIterator(init: () -> V): CharPivotIterator<*, V> {
     val revertible = SourceRevertibleIterator(this)
     return object : AbstractPivotIterator<Char, SourcePosition, V>(
         revertible,
-        init
+        { init() }
     ), CharPivotIterator<SourcePosition, V>, CharRevertibleIterator<SourcePosition> by revertible {}
 }
 

@@ -3,8 +3,8 @@ plugins {
 }
 
 allprojects {
-    group = "io.github.aeckar.modular-parsers"
-    version = "1.0.0-RC"
+    group = "io.github.aeckar.collections"
+    version = "1.0.0"
 }
 
 nexusPublishing {

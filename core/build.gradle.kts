@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    id("module.publication")
-    id("multiplatform.targets")
+    id("module-publication")
+    id("multiplatform-targets")
+    id("dokkatoo-module")
 }
 
 kotlin {
@@ -10,7 +10,12 @@ kotlin {
     sourceSets {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-            implementation(project(":test-shared"))
+            implementation(project(":test-logic"))
         }
     }
+}
+
+dokkatoo {
+    moduleName = "Extended Collections Core"
+    modulePath = "core"
 }

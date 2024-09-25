@@ -1,37 +1,31 @@
-import io.github.aeckar.collections.TreeNode
+import io.github.aeckar.collections.treeNodeOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-private class SimpleTreeNode(val ordinal: Int) : TreeNode<SimpleTreeNode> {
-    override val children: MutableList<SimpleTreeNode> = mutableListOf()
-
-    override fun toString() = "*"
-}
-
 class TreeNodeTests {
-    private val tree = SimpleTreeNode(4)
+    private val tree = treeNodeOf(4)
 
     init {
-        tree.children.add(SimpleTreeNode(0))
-        tree.children.add(SimpleTreeNode(2).apply { children.add(SimpleTreeNode(1)) })
-        tree.children.add(SimpleTreeNode(3))
+        tree += 0
+        tree += treeNodeOf(2)..1
+        tree += 3
     }
 
     @Test
     fun `correct tree string`() {
         assertEquals("""
-            *
-            ├── *
-            ├── *
-            │   └── *
-            └── *
+            4
+            ├── 0
+            ├── 2
+            │   └── 1
+            └── 3
         """.trimIndent(), tree.treeString())
     }
 
     @Test
     fun `correct iteration order`() {
         for ((index, node) in tree.withIndex()) {
-            assertEquals(index, node.ordinal)
+            assertEquals(index, node.value)
         }
     }
 }

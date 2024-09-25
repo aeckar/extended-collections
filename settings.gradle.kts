@@ -1,5 +1,5 @@
 pluginManagement {
-    includeBuild("convention-plugins")
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -16,6 +16,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "extended-collections"
+
 include(":core")
-include("io")
-include("test-shared")
+include(":kotlinx-io")
+include(":test-logic")
+include(":samples")
+include(":docs")

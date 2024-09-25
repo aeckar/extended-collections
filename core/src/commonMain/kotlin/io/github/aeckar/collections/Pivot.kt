@@ -1,30 +1,33 @@
 package io.github.aeckar.collections
 
 /**
- * Returns an initializer that can be passed to [linkedListOf].
+ * Returns a [linker][link] for a [Pivot].
  */
-public fun <P : Comparable<P>, H> pivot(): (Pair<P, H>) -> Pivot<P, H> = { Pivot(it.first, it.second) }
+@Suppress("NOTHING_TO_INLINE")
+public inline fun <P : Comparable<P>, V> pivots(): (Pair<P, V>) -> Pivot<P, V> = { Pivot(it.first, it.second) }
 
 /**
  * An object containing a position and a value.
  * @param position the location of this in some larger object
  * @param value a value specific to the location of this
  */
-public data class Pivot<P : Comparable<P>, out H>(
+public data class Pivot<P : Comparable<P>, out V>(
     public val position: P,
-    public val value: H
-) : ListNode<Pivot<P, @UnsafeVariance H>>()
+    override val value: V
+) : ListNode<Pivot<P, @UnsafeVariance V>>(), ValueNode<V> {
+    override fun toString(): String = "$value @ $position"
+}
 
 /**
  * Returns the pivot whose position has a [total ordering][Comparable] equal to the one given.
  *
  * If one does not exist, it is inserted according to the ordering of [P].
  */
-public fun <H, P : Comparable<P>> Pivot<P, H>.getOrInsert(position: P, lazyValue: () -> H): Pivot<P, H> {
+public fun <V, P : Comparable<P>> Pivot<P, V>.getOrInsert(position: P, lazyValue: () -> V): Pivot<P, V> {
     /**
      * Assumes positions are not equal.
      */
-    fun Pivot<P, H>.insert(): Pivot<P, H> {
+    fun Pivot<P, V>.insert(): Pivot<P, V> {
         val pivot = Pivot(position, lazyValue())
         if (this.position > position) {
             insertBefore(pivot)

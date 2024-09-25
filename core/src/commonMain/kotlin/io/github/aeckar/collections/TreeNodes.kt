@@ -1,19 +1,35 @@
 package io.github.aeckar.collections
 
+import kotlin.experimental.ExperimentalTypeInference
+
+// ------------------------------ factories ------------------------------
+
 /**
- * Returns a read-only view of the elements in this tree.
- *
- * Changes made to the underlying node are reflected back to this view.
- * If the underlying list containing the children is reassigned, that change is not reflected.
+ * Returns a mutable tree node containing the given value.
  */
-public fun <Self : TreeNode<Self>> TreeNode<Self>.readOnly(): TreeNode<Self> = object : TreeNode<Self> by this {
-    override val children: List<Self> = this@readOnly.children.readOnly()
+public fun <V> treeNodeOf(value: V): DataTreeNode<V> = DataTreeNode(value)
+
+/**
+ * Returns a read-only view of a tree whose nodes contain the given values.
+ */
+@OptIn(ExperimentalTypeInference::class)
+public inline fun <V> buildTree(
+    rootValue: V,
+    @BuilderInference builder: DataTreeNode<V>.() -> Unit
+): ReadOnlyDataTreeNode<V> {
+    return DataTreeNode(rootValue).apply(builder).readOnly()
 }
+
+// ------------------------------ interface & implementation ------------------------------
 
 /**
  * An element in a tree.
  *
+ * Unlike in Java, this library does not provide a dedicated tree class.
+ * Instead, tree nodes are operated on directly.
+ *
  * Instances may contain child nodes, but do not contain a reference to their parent.
+ * @sample io.github.aeckar.collections.samples.tree
  */
 public interface TreeNode<Self : TreeNode<Self>> : Iterable<Self> {
     /**
@@ -121,4 +137,52 @@ public interface TreeNode<Self : TreeNode<Self>> : Iterable<Self> {
          */
         public val ASCII: Style = Style("|-++")
     }
+}
+
+/**
+ * A value-containing tree node whose children can be modified.
+ */
+public data class DataTreeNode<out V> @PublishedApi internal constructor(
+    override val value: V
+) : ValueTreeNode<V> {
+    override val children: MutableList<DataTreeNode<@UnsafeVariance V>> = mutableListOf()
+
+    /**
+     * Appends the given element as a tree node to this one.
+     * @return the receiver node
+     */
+    public operator fun rangeTo(node: DataTreeNode<@UnsafeVariance V>): DataTreeNode<V> {
+        return this.also { children.add(node) }
+    }
+
+    /**
+     * Appends the given element as a tree node to this one.
+     * @return the receiver node
+     */
+    public operator fun rangeTo(value: @UnsafeVariance V): DataTreeNode<V> {
+        return this.also { children.add(DataTreeNode(value)) }
+    }
+
+    /**
+     * Appends the given element as a tree node to this one.
+     */
+    public operator fun plusAssign(node: DataTreeNode<@UnsafeVariance V>) {
+        children.add(node)
+    }
+
+    /**
+     * Appends the given element as a tree node to this one.
+     */
+    public operator fun plusAssign(value: @UnsafeVariance V) {
+        children.add(DataTreeNode(value))
+    }
+
+    /**
+     * Returns a tree node whose value is the receiver, whose only child containing the given value.
+     */
+    public operator fun @UnsafeVariance V.rangeTo(childValue: @UnsafeVariance V): DataTreeNode<V> {
+        return treeNodeOf(this)..childValue
+    }
+
+    override fun toString(): String = value.toString()
 }

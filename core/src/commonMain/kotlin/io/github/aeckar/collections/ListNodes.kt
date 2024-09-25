@@ -1,19 +1,24 @@
 @file:Suppress("UNCHECKED_CAST")
 package io.github.aeckar.collections
 
+// ------------------------------ factories ------------------------------
+
+/**
+ * Returns a [linker][link] for a [ValueListNode].
+ */
+@Suppress("NOTHING_TO_INLINE")
+public inline fun <V> values(): (V) -> ValueListNode<V> = { ValueListNode(it) }
+
 /**
  * Returns the head of the doubly-linked list that is created when the nodes
  * with the given arguments are joined together in the same order.
+ * @param linker initializes each list node using the provided arguments
  */
-public inline fun <P, Self : ListNode<Self>> linkedListOf(
-    init: (P) -> Self,
-    first: P,
-    vararg others: P
-): Self {
-    val head = init(first)
+public inline fun <T, Self : ListNode<Self>> link(linker: (T) -> Self, first: T, vararg others: T): Self {
+    val head = linker(first)
     var curNode = head
     for (argument in others) {
-        val next = init(argument)
+        val next = linker(argument)
         curNode.insertAfter(next)
         curNode = next
     }
@@ -37,6 +42,8 @@ public fun <Self : ListNode<Self>> Self?.reversed(): Iterable<Self> = Iterable {
     }
 }
 
+// ------------------------------ implementations ------------------------------
+
 /**
  * Returns a list containing all nodes in this linked list.
  *
@@ -54,10 +61,14 @@ public fun <Self: ListNode<Self>> Self?.toList(): List<Self> {
 }
 
 /**
- * An element in a linked list.
+ * An element in a doubly-linked list.
+ *
+ * Unlike in Java, this library does not provide a dedicated linked list class.
+ * Instead, list nodes are operated on directly.
  *
  * A nullable property of this type whose value is null is considered an empty linked list.
  * Iterates over the elements in the linked list, starting from and including this one.
+ * @sample io.github.aeckar.collections.samples.linkedList
  */
 public abstract class ListNode<Self : ListNode<Self>> : Iterable<Self> {
     @PublishedApi internal var next: Self? = null
