@@ -142,6 +142,7 @@ public interface TreeNode<Self : TreeNode<Self>> : Iterable<Self> {
 /**
  * A value-containing tree node whose children can be modified.
  */
+@ConsistentCopyVisibility
 public data class DataTreeNode<out V> @PublishedApi internal constructor(
     override val value: V
 ) : ValueTreeNode<V> {

@@ -1,5 +1,10 @@
 plugins {
     id("root-publication")
+    alias(libs.plugins.dokka)
 }
 
-//tasks["build"].dependsOn(gradle.includedBuild("docs").task(":dokkatooGenerate"))
+tasks.dokkaHtmlMultiModule {
+    delete("docs/") // Replace folder
+    outputDirectory = file("docs/")
+    moduleName = "Extended Collections"
+}

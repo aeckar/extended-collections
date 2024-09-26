@@ -17,8 +17,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "extended-collections"
 
-include(":core")
-include(":kotlinx-io")
-include(":test-logic")
-include(":samples")
-include(":docs")
+include(":core", ":io", ":test-logic", ":samples")
