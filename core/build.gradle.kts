@@ -7,6 +7,12 @@ plugins {
     alias(libs.plugins.dokka)
 }
 
+tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets.configureEach {
+        samples.from(project(":core:samples"))
+    }
+}
+
 kotlin {
     explicitApi()
 

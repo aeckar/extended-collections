@@ -3,7 +3,7 @@ package io.github.aeckar.collections.samples
 
 import io.github.aeckar.collections.*
 
-fun revertibleIterator() {
+private fun revertibleIterator() {
     val chars = "Hello, world!".revertibleIterator()
     chars.save()
     chars.advance(7)
@@ -12,7 +12,7 @@ fun revertibleIterator() {
     println(Iterable { chars }.joinToString(""))    // Hello, world!
 }
 
-fun pivotIterator() {
+private fun pivotIterator() {
     val chars = "Hello, world!".pivotIterator { arrayOf(0) }
     while (chars.hasNext()) {
         chars.here()[0] = chars.nextChar().code
@@ -20,12 +20,12 @@ fun pivotIterator() {
     println(chars.pivots().map { it.value })    // [72, 101, 108, ... 33]
 }
 
-fun linkedList() {
+private fun linkedList() {
     val nodes = link(values(), 1, 2, 3)
     println(nodes.toList())   // [1, 2, 3]
 }
 
-fun tree() {
+private fun tree() {
     val tree = buildTree("5") { // Values indicate iteration order
         this += "0"
         this += "3".."2".."1"
@@ -40,7 +40,7 @@ fun tree() {
                                 // └── 4
 }
 
-fun multiSet() {
+private fun multiSet() {
     val elements = multiSetOf("Hello, world!", 'K', 16, 3.14, 16)
     println(elements.size)          // 5
     println(elements.toList().size) // 4 (number of unique elements)

@@ -5,3 +5,5 @@ module:core
 io.github.aeckar.collections
 module:io
 io.github.aeckar.collections
+module:samples
+io.github.aeckar.collections.samples

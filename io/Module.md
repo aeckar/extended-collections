@@ -1,7 +1,3 @@
-# Module core
-
-Provides core library functionality.
-
 # Module io
 
 Provides revertible and pivoting iterators over

@@ -1,5 +1,3 @@
-import org.jetbrains.dokka.gradle.DokkaTask
-
 plugins {
     id("module-publication")
     id("multiplatform-targets")
