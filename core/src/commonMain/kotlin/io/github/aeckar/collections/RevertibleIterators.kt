@@ -47,7 +47,15 @@ public fun <H> String.pivotIterator(init: (Int) -> H): CharPivotIterator<Int, H>
 
 /**
  * A sequence of elements whose position can be saved and reverted to later.
- * @sample io.github.aeckar.collections.samples.revertibleIterator
+ *
+ * ```kotlin
+ *     val chars = "Hello, world!".revertibleIterator()
+ *     chars.save()
+ *     chars.advance(7)
+ *     println(Iterable { chars }.joinToString(""))    // world!
+ *     chars.revert()
+ *     println(Iterable { chars }.joinToString(""))    // Hello, world!
+ * ```
  */
 public interface RevertibleIterator<out E, out P> : Iterator<E> {
     /**
@@ -194,7 +202,14 @@ internal class StringRevertibleIterator(
  *
  * Use when it is necessary to map both positional data and metadata to elements in a sequence
  * by using revertible iteration.
- * @sample io.github.aeckar.collections.samples.pivotIterator
+ *
+ * ```kotlin
+ *     val chars = "Hello, world!".pivotIterator { arrayOf(0) }
+ *     while (chars.hasNext()) {
+ *         chars.here()[0] = chars.nextChar().code
+ *     }
+ *     println(chars.pivots().map { it.value })    // [72, 101, 108, ... 33]
+ * ```
  */
 public interface PivotIterator<out E, P : Comparable<P>, out V> : RevertibleIterator<E, P> {
     /**

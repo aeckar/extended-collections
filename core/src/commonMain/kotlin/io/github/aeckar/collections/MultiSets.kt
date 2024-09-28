@@ -68,7 +68,13 @@ public fun <E> mutableMultiSetOf(vararg elements: E): MutableMultiSet<E> {
  *
  * Because duplicated elements are equivalent, they are discarded after they are counted.
  * To preserve duplicated elements, a set of lists should be used instead.
- * @sample io.github.aeckar.collections.samples.multiSet
+ *
+ * ```kotlin
+ *     val elements = multiSetOf("Hello, world!", 'K', 16, 3.14, 16)
+ *     println(elements.size)          // 5
+ *     println(elements.toList().size) // 4 (number of unique elements)
+ *     println(elements.count(16))     // 2
+ * ```
  */
 public interface MultiSet<E> : Set<E> {
     /**

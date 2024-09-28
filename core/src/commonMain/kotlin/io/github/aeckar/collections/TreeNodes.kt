@@ -29,7 +29,21 @@ public inline fun <V> buildTree(
  * Instead, tree nodes are operated on directly.
  *
  * Instances may contain child nodes, but do not contain a reference to their parent.
- * @sample io.github.aeckar.collections.samples.tree
+ *
+ * ```kotlin
+ *     val tree = buildTree("5") { // Values indicate iteration order
+ *         this += "0"
+ *         this += "3".."2".."1"
+ *         this += "4"
+ *     }
+ *     println(tree)               // 4 (root node)
+ *     println(tree.treeString())  // 5
+ *                                 // ├── 0
+ *                                 // ├── 3
+ *                                 // │   └── 2
+ *                                 // │       └── 1
+ *                                 // └── 4
+ * ```
  */
 public interface TreeNode<Self : TreeNode<Self>> : Iterable<Self> {
     /**

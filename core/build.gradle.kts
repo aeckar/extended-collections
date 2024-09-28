@@ -1,16 +1,7 @@
-import org.jetbrains.dokka.gradle.DokkaTask
-
 plugins {
     id("module-publication")
     id("multiplatform-targets")
-    id("dokka-convention")
-    alias(libs.plugins.dokka)
-}
-
-tasks.withType<DokkaTask>().configureEach {
-    dokkaSourceSets.configureEach {
-        samples.from(project(":core:samples"))
-    }
+    id("dokkatoo-convention")
 }
 
 kotlin {
@@ -22,4 +13,9 @@ kotlin {
             implementation(project(":test-logic"))
         }
     }
+}
+
+dokkatoo {
+    moduleName = "Extended Collections Core"
+    modulePath = "core"
 }

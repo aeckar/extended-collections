@@ -1,13 +1,11 @@
 pluginManagement {
-    includeBuild("build-logic")
+    includeBuild("convention-plugins")
+
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
     }
-}
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 
 dependencyResolutionManagement {
@@ -20,5 +18,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "extended-collections"
 
-include(":core", ":io", ":test-logic", ":core:samples")
-findProject(":core:samples")?.name = "samples"
+include(":core", ":io", ":test-logic", ":docs")

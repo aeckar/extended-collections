@@ -68,7 +68,11 @@ public fun <Self: ListNode<Self>> Self?.toList(): List<Self> {
  *
  * A nullable property of this type whose value is null is considered an empty linked list.
  * Iterates over the elements in the linked list, starting from and including this one.
- * @sample io.github.aeckar.collections.samples.linkedList
+ *
+ * ```kotlin
+ *     val nodes = link(values(), 1, 2, 3)
+ *     println(nodes.toList())   // [1, 2, 3]
+ * ```
  */
 public abstract class ListNode<Self : ListNode<Self>> : Iterable<Self> {
     @PublishedApi internal var next: Self? = null

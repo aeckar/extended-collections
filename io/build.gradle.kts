@@ -1,8 +1,7 @@
 plugins {
     id("module-publication")
     id("multiplatform-targets")
-    id("dokka-convention")
-    alias(libs.plugins.dokka)
+    id("dokkatoo-convention")
 }
 
 kotlin {
@@ -18,4 +17,9 @@ kotlin {
             implementation(project(":test-logic"))
         }
     }
+}
+
+dokkatoo {
+    moduleName = "Extended Collections I/0"
+    modulePath = "kotlinx-io"
 }
