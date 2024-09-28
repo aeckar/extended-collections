@@ -1,6 +1,7 @@
+# When KT-71655 is fixed, agp = "8.5.0" and kotlin = "2.0.20"
 [versions]
-agp = "8.5.0"
-kotlin = "2.0.20"
+agp = "8.3.0"
+kotlin = "2.0.0"
 nexus-publish = "2.0.0"
 kotlinx-io = "0.5.1"
 dokkatoo-html = "2.3.1"

@@ -1,6 +1,6 @@
-pluginManagement {
-    includeBuild("convention-plugins")
+rootProject.name = "extended-collections"
 
+pluginManagement {
     repositories {
         google()
         mavenCentral()
@@ -15,7 +15,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "extended-collections"
 
 include(":core", ":io", ":test-logic", ":docs")

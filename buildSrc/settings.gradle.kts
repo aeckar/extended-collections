@@ -1,3 +1,5 @@
+rootProject.name = "buildSrc"
+
 pluginManagement {
     repositories {
         google()
@@ -13,7 +15,6 @@ dependencyResolutionManagement {
         gradlePluginPortal()
         mavenCentral()
     }
-
     versionCatalogs {
         create("libs") {
             from(files("../gradle/libs.versions.toml"))

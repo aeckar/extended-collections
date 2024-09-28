@@ -9,4 +9,8 @@ dependencies {
 
 dokkatoo {
     moduleName = "Extended Collections"
+    dokkatooPublications.configureEach {
+        outputDir = file(".")
+        includes.from("../README.md")
+    }
 }

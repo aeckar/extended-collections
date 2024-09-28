@@ -4,10 +4,3 @@ plugins {
 }
 
 tasks["build"].dependsOn(project(":docs").getTasksByName("dokkatooGenerate", false))
-
-dokkatoo {
-    dokkatooPublications.configureEach {
-        includes.from("Module.md")
-        includes.from("README.md")
-    }
-}

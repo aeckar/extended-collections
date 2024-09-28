@@ -6,7 +6,6 @@ plugins {
 
 kotlin {
     explicitApi()
-
     sourceSets {
         commonTest.dependencies {
             implementation(libs.kotlin.test)

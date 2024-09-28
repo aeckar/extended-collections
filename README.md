@@ -5,7 +5,6 @@
 // TODO tests passing
 ![pages-build-deployment](https://github.com/aeckar/extended-collections/actions/workflows/pages/pages-build-deployment/badge.svg?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Maintained?: yes](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 
 ---
 

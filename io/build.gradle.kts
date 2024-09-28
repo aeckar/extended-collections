@@ -6,7 +6,6 @@ plugins {
 
 kotlin {
     explicitApi()
-
     sourceSets {
         commonMain.dependencies {
             api(libs.kotlinx.io)
@@ -20,6 +19,6 @@ kotlin {
 }
 
 dokkatoo {
-    moduleName = "Extended Collections I/0"
-    modulePath = "kotlinx-io"
+    moduleName = "Extended Collections I/O"
+    modulePath = "io"
 }

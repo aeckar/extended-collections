@@ -156,12 +156,11 @@ public interface TreeNode<Self : TreeNode<Self>> : Iterable<Self> {
 /**
  * A value-containing tree node whose children can be modified.
  */
-@ConsistentCopyVisibility
+// @ConsistentCopyVisibility    Add when KT-71655 is fixed
 public data class DataTreeNode<out V> @PublishedApi internal constructor(
     override val value: V
 ) : ValueTreeNode<V> {
     override val children: MutableList<DataTreeNode<@UnsafeVariance V>> = mutableListOf()
-
     /**
      * Appends the given element as a tree node to this one.
      * @return the receiver node
