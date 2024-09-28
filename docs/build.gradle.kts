@@ -10,7 +10,14 @@ dependencies {
 dokkatoo {
     moduleName = "Extended Collections"
     dokkatooPublications.configureEach {
-        outputDir = file(".")
         includes.from("../README.md")
+    }
+}
+
+tasks.register<Sync>("buildDocumentation") {  // Workaround for `outputDirs` not working
+    dependsOn("dokkatooGenerate")
+    copy {
+        from("build/dokka/html")
+        into(".")
     }
 }

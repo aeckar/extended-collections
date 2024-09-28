@@ -1,0 +1,7 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:Extended Collections Core
+io.github.aeckar.collections
+module:Extended Collections I/O
+io.github.aeckar.collections

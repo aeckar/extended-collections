@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>All modules</title>
+    <link href="images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="scripts/sourceset_dependencies.js" async="async"></script>
+<link href="styles/style.css" rel="Stylesheet">
+<link href="styles/main.css" rel="Stylesheet">
+<link href="styles/prism.css" rel="Stylesheet">
+<link href="styles/logo-styles.css" rel="Stylesheet">
+<link href="styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="index.html">
+                            Extended Collections
+                    </a>
+            </div>
+            <div class="library-version">
+1.0.0            </div>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" id="content" pageIds="Extended Collections::.ext/allModules///PointingToDeclaration//0">
+  <div class="breadcrumbs"></div>
+  <div class="cover ">
+    <div class="cover ">
+      <h1 class="">extended-collections</h1>
+      <p class="paragraph"><i>Specialized Data Structures</i></p>
+      <p class="paragraph">// TODO maven central // TODO tests passing  <a href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a></p>
+
+      <div class="sample-container">
+        <pre><code class="block lang-kotlin" theme="idea">commonMain {<br>    implementation(&quot;io.github.aeckar:extended-collections:1.0.0&quot;)<br>}</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+          <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+        </span></div>
+      <p class="paragraph">Started as a utility library for my <a href="https://github.com/aeckar/modular-parsers">modular-parsers</a> project, this library builds upon the Kotlin Collections Framework by providing:</p>
+      <ul>
+        <li>
+          <p class="paragraph">Multi-sets</p>
+        </li>
+        <li>
+          <p class="paragraph">Rich iterators</p>
+        </li>
+        <li>
+          <p class="paragraph">Read-only views over collections</p>
+        </li>
+        <li>
+          <p class="paragraph">Linked lists & trees, and</p>
+        </li>
+        <li>
+          <p class="paragraph">Resizable lists of unboxed values</p>
+        </li>
+      </ul>
+      <p class="paragraph">among other utilities. The overall structure of the API is designed to be similar to that of the standard library, allowing for seamless integration into existing codebases. Additionally, the core library module holds no dependencies and is designed with performance in mind. The <code class="lang-kotlin">io</code> module extends the functionality of the library by providing iterators over <a href="https://kotlin.github.io/kotlinx-io/kotlinx-io-core/kotlinx.io/-raw-source/index.html">kotlinx.io.RawSource</a>.</p>
+      <p class="paragraph">The full online documentation can be found <a href="https://aeckar.github.io/extended-collections/">here</a>.</p>
+    </div>
+    <h2 class="">All modules:</h2>
+    <div class="table"><a data-name="367081532%2FMain%2F0" anchor-label="Extended Collections Core" id="367081532%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="core/index.html">Extended Collections Core</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="367081532%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Provides core library functionality.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="1958134814%2FMain%2F0" anchor-label="Extended Collections I/O" id="1958134814%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="io/index.html">Extended Collections I/O</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1958134814%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Provides revertible and pivoting iterators over <a href="https://kotlin.github.io/kotlinx-io/kotlinx-io-core/kotlinx.io/-raw-source/index.html">kotlinx.io.RawSource</a>.</p>
+            </span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© Angel Eckardt</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
