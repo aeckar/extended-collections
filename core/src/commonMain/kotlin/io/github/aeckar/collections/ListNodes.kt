@@ -1,13 +1,14 @@
 @file:Suppress("UNCHECKED_CAST")
 package io.github.aeckar.collections
 
+import kotlin.js.JsName
+
 // ------------------------------ factories ------------------------------
 
 /**
  * Returns a [linker][link] for a [ValueListNode].
  */
-@Suppress("NOTHING_TO_INLINE")
-public inline fun <V> values(): (V) -> ValueListNode<V> = { ValueListNode(it) }
+public fun <V> values(): (V) -> ValueListNode<V> = { ValueListNode(it) }
 
 /**
  * Returns the head of the doubly-linked list that is created when the nodes
@@ -75,7 +76,7 @@ public fun <Self: ListNode<Self>> Self?.toList(): List<Self> {
  * ```
  */
 public abstract class ListNode<Self : ListNode<Self>> : Iterable<Self> {
-    @PublishedApi internal var next: Self? = null
+    @PublishedApi @JsName("nextNode") internal var next: Self? = null
     internal var last: Self? = null
 
     /**

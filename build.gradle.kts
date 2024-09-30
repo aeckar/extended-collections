@@ -3,4 +3,4 @@ plugins {
     id("dokkatoo-convention")
 }
 
-tasks["build"].dependsOn(project(":docs").getTasksByName("buildDocumentation", false))
+tasks["build"].dependsOn(project(":docs").getTasksByName("buildDocumentation", false).single())

@@ -3,8 +3,7 @@ package io.github.aeckar.collections
 /**
  * Returns a [linker][link] for a [Pivot].
  */
-@Suppress("NOTHING_TO_INLINE")
-public inline fun <P : Comparable<P>, V> pivots(): (Pair<P, V>) -> Pivot<P, V> = { Pivot(it.first, it.second) }
+public fun <P : Comparable<P>, V> pivots(): (Pair<P, V>) -> Pivot<P, V> = { Pivot(it.first, it.second) }
 
 /**
  * An object containing a position and a value.

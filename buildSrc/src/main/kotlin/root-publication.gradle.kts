@@ -1,3 +1,5 @@
+import java.lang.System.getenv
+
 plugins {
     id("io.github.gradle-nexus.publish-plugin")
 }
@@ -8,11 +10,12 @@ allprojects {
 }
 
 nexusPublishing {
-    // TODO https://github.com/gradle-nexus/publish-plugin#publishing-to-maven-central-via-sonatype-ossrh
     repositories {
         sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
+            snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            username = getenv("ORG_GRADLE_PROJECT_sonatypeUsername")
+            password = getenv("ORG_GRADLE_PROJECT_sonatypePassword")
         }
     }
 }

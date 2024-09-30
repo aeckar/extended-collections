@@ -8,36 +8,41 @@ plugins {
 }
 
 publishing {
-    // Configure all publications
     publications.withType<MavenPublication> {
-        // Stub javadoc.jar artifact
-        artifact(tasks.register("${name}JavadocJar", Jar::class) {
-            archiveClassifier.set("javadoc")
-            archiveAppendix.set(this@withType.name)
-        })
-
-        // Provide artifacts information required by Maven Central
+        val javadocStub = tasks.register<Jar>("${name}JavadocJar") {
+            dependsOn(project(":docs").getTasksByName("buildDocumentation", false).single())
+            archiveClassifier = "javadoc"
+            archiveAppendix = this@withType.name
+            from("docs/build/dokka/html")
+        }
+        artifact(javadocStub)
         pom {
-            name.set("modular-parsers")
-            description.set("Type-safe parser-combinators for Kotlin Multiplatform")
-            url.set("https://github.com/Kotlin/multiplatform-library-template")
-
+            name = "extended-collections"
+            description = "An extension of the Kotlin Collections Framework"
+            url = "https://github.com/Kotlin/extended-collections"
             licenses {
                 license {
-                    name.set("MIT")
-                    url.set("https://opensource.org/licenses/MIT")
+                    name = "MIT"
+                    url = "https://opensource.org/licenses/MIT"
                 }
+            }
+            issueManagement {
+                system = "GitHub"
+                url = "https://github.com/Kotlin/extended-collections/issues"
             }
             developers {
                 developer {
-                    id.set("aeckar")
-                    name.set("Angel Eckardt")
-                    organization.set("University of South Florida")
-                    organizationUrl.set("https://www.usf.edu/")
+                    id = "aeckar"
+                    name = "Angel Eckardt"
+                    organization = "University of South Florida"
+                    organizationUrl = "https://www.usf.edu/"
                 }
             }
             scm {
-                url.set("https://github.com/aeckar/modular-parsers")
+                val location = "//github.com/aeckar/extended-collections"
+                connection = "scm:git:git:$location.git"
+                developerConnection = "scm:git:ssh:$location.git"
+                url = "https:$location"
             }
         }
     }
