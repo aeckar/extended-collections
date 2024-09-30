@@ -1,4 +1,4 @@
-name: Deploy to central
+name: Deploy to Central
 
 on: workflow_dispatch
 
@@ -17,6 +17,7 @@ jobs:
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
+    - run: chmod +x gradlew
     - uses: actions/checkout@v3
     - name: Validate Gradle Wrapper
       uses: gradle/wrapper-validation-action@v1
