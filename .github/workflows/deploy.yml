@@ -1,4 +1,4 @@
-name: Deploy to Central
+name: Deploy to central
 
 on: workflow_dispatch
 
