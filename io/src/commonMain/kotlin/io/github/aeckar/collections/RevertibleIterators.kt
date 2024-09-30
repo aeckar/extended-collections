@@ -6,19 +6,6 @@ import kotlinx.io.readString
 
 private const val SECTION_SIZE = 8192L
 
-internal data class SourcePosition(
-    val bufferSection: Int,
-    val position: Int
-) : Comparable<SourcePosition> {
-    override fun compareTo(other: SourcePosition): Int {
-        val bufferDiff = bufferSection - other.bufferSection
-        if (bufferDiff != 0) {
-            return bufferDiff
-        }
-        return position - other.position
-    }
-}
-
 /**
  * Returns a revertible iterator over the characters loaded from this source.
  *
@@ -27,23 +14,6 @@ internal data class SourcePosition(
  * any function called from the returned instance throws an [IllegalStateException].
  */
 public fun RawSource.revertibleIterator(): CharRevertibleIterator<*> = SourceRevertibleIterator(this)
-
-/**
- * Returns an iterator pivoting over the characters loaded from this source.
- *
- * Making this source buffered provides no performance benefit to the returned iterator.
- * If this is [closed][RawSource.close],
- * any function called from the returned instance throws an [IllegalStateException].
- */
-public fun <V> RawSource.pivotIterator(init: () -> V): CharPivotIterator<*, V> {
-    val revertible = SourceRevertibleIterator(this)
-    return object : AbstractPivotIterator<Char, SourcePosition, V>(
-        revertible,
-        { init() }
-    ), CharPivotIterator<SourcePosition, V>, CharRevertibleIterator<SourcePosition> by revertible {
-        override fun peek() = revertible.peek() // Silences compiler warning
-    }
-}
 
 internal class SourceRevertibleIterator(private val source: RawSource) : CharRevertibleIterator<SourcePosition> {
     private val buffer = mutableListOf("")  // Allows initial hasNext()

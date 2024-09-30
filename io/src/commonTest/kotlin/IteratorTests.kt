@@ -11,14 +11,14 @@ import kotlin.test.assertEquals
 
 class IteratorTests {
     @Test
-    fun `revertible source iterator`() {
+    fun revertible_source_iterator() {
         val source = SystemFileSystem.source(Path("src/commonTest/resources/source.txt"))
         source.revertibleIterator().testReverting(TEST_STRING.toList())
         // play with SECTION_SIZE, too
     }
 
     @Test
-    fun `pivoting source iterator`() {
+    fun pivoting_source_iterator() {
         fun getSource() = SystemFileSystem.source(Path("src/commonTest/resources/source.txt"))
 
         assertEquals(

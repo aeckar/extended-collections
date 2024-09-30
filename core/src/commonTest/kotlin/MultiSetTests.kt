@@ -5,14 +5,14 @@ import kotlin.test.Test
 
 class MultiSetTests {
     @Test
-    fun `set behavior`() {
+    fun set_behavior() {
         val elements = listOf(0, 1L, 2.0, "three")
         val set = buildMultiSet { addAll(elements) }
         check(set.containsAll(elements))
     }
 
     @Test
-    fun `instance counting behavior`() {
+    fun instance_counting_behavior() {
         val rand = Random(0)
         val elements = mutableListOf<Int>()
         val set = mutableMultiSetOf<Int>()

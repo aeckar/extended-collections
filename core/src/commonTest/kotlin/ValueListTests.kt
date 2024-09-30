@@ -5,7 +5,7 @@ import kotlin.test.assertFailsWith
 
 class ValueListTests {
     @Test
-    fun `underflow fails`() {
+    fun underflow_failure() {
         val x = IntList()
         assertFailsWith<IllegalStateException> { x.removeLast() }
         x += 16
@@ -14,7 +14,7 @@ class ValueListTests {
     }
 
     @Test
-    fun `fifo behavior`() {
+    fun fifo_behavior() {
         val x = IntList()
         x += 7
         x += 2

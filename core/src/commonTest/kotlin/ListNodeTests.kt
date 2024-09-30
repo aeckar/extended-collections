@@ -14,7 +14,7 @@ private data class SimpleListNode(val ordinal: Int) : ListNode<SimpleListNode>()
 
 class ListNodeTests {
     @Test
-    fun `get or insert pivot`() {
+    fun get_and_insert_pivot() {
         val initial = Pivot(1, "head")
         check(initial.getOrInsert(1) { "first" } === initial)
         initial.apply {
@@ -31,7 +31,7 @@ class ListNodeTests {
     }
 
     @Test
-    fun `append node`() {
+    fun append_node() {
         val head = SimpleListNode(0).apply { insertAfter(SimpleListNode(1)) }
         head.next().insertAfter(SimpleListNode(2))
         assertEquals(head.next().ordinal, 1)
@@ -44,7 +44,7 @@ class ListNodeTests {
     }
 
     @Test
-    fun `prepend node`() {
+    fun prepend_node() {
         val tail = SimpleListNode(0).apply { insertBefore(SimpleListNode(1)) }
         tail.last().insertBefore(SimpleListNode(2))
         assertEquals(tail.last().ordinal, 1)
@@ -57,7 +57,7 @@ class ListNodeTests {
     }
 
     @Test
-    fun `forward list traversal`() {
+    fun forward_list_traversal() {
         val linkedList = link(simpleListNode(), 0, 1, 2)
         for ((index, node) in linkedList.withIndex()) {
             assertEquals(node.ordinal, index)
@@ -65,7 +65,7 @@ class ListNodeTests {
     }
 
     @Test
-    fun `forward traversal`() {
+    fun forward_traversal() {
         val linkedList = SimpleListNode(0).apply { insertAfter(SimpleListNode(1)) }
         linkedList.next().insertAfter(SimpleListNode(2))
         for ((index, node) in linkedList.withIndex()) {
@@ -74,7 +74,7 @@ class ListNodeTests {
     }
 
     @Test
-    fun `backward traversal`() {
+    fun backward_traversal() {
         val linkedList = SimpleListNode(2).apply { insertAfter(SimpleListNode(1)) }
         linkedList.next().insertAfter(SimpleListNode(0))
         for ((index, node) in linkedList.tail().reversed().withIndex()) {
@@ -83,7 +83,7 @@ class ListNodeTests {
     }
 
     @Test
-    fun `forward search or last`() {
+    fun forward_search_or_last() {
         link(pivots(), 1 to "first", 2 to "second", 3 to "third", 4 to "fourth").head().apply {
             assertEquals("second", seek { it.position == 2 }.value)
             assertEquals("third", seek { it.position == 3 }.value)
@@ -93,7 +93,7 @@ class ListNodeTests {
     }
 
     @Test
-    fun `backward search or last`() {
+    fun backward_search_or_first() {
         link(pivots(), 1 to "first", 2 to "second", 3 to "third", 4 to "fourth").tail().apply {
             assertEquals("third", backtrace { it.position == 3 }.value)
             assertEquals("second", backtrace { it.position == 2 }.value)
@@ -102,7 +102,7 @@ class ListNodeTests {
     }
 
     @Test
-    fun `convert to list`() {
+    fun conversion_to_list() {
         assertContentEquals(
             expected = listOf(0, 1, 2),
             actual = link(simpleListNode(), 0, 1, 2).toList().map { it.ordinal }

@@ -12,7 +12,7 @@ class TreeNodeTests {
     }
 
     @Test
-    fun `correct tree string`() {
+    fun correct_tree_string() {
         assertEquals("""
             4
             ├── 0
@@ -23,7 +23,7 @@ class TreeNodeTests {
     }
 
     @Test
-    fun `correct iteration order`() {
+    fun correct_iteration_order() {
         for ((index, node) in tree.withIndex()) {
             assertEquals(index, node.value)
         }

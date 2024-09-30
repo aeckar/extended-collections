@@ -49,27 +49,25 @@ fun PivotIterator<*, *, MutableList<Int>>.testPivoting() {
 
 class IteratorTests {
     @Test
-    fun `revertible list iterator`() {
+    fun revertible_list_iterator() {
         assertContentEquals(TEST_LIST, TEST_LIST.revertibleIterator().asSequence().toList())
         TEST_LIST.revertibleIterator().testReverting(TEST_LIST)
     }
 
     @Test
-    fun `revertible string iterator`() {
+    fun revertible_string_iterator() {
         TEST_STRING.revertibleIterator().testReverting(TEST_STRING.toList())
     }
 
-
-
     @Test
-    fun `pivoting list iterator`() {
+    fun pivoting_list_iterator() {
         assertContentEquals(TEST_LIST, TEST_LIST.pivotIterator { mutableListOf(0) }.asSequence().toList())
         TEST_LIST.pivotIterator { mutableListOf(0) }.testReverting(TEST_LIST)
         TEST_LIST.pivotIterator { mutableListOf(0) }.testPivoting()
     }
 
     @Test
-    fun `pivoting string iterator`() {
+    fun pivoting_string_iterator() {
         TEST_STRING.pivotIterator { mutableListOf(0) }.testReverting(TEST_STRING.toList())
         TEST_STRING.pivotIterator { mutableListOf(0) }.testPivoting()
     }
