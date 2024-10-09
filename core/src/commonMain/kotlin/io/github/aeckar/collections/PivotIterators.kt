@@ -51,7 +51,7 @@ public interface PivotIterator<out E, P : Comparable<P>, out V> : RevertibleIter
      *
      * Invoking this function may incur a significant performance impact for large sequences.
      */
-    public fun pivots(): List<Pivot<P, V>>
+    public fun pivots(): List<DataPivot<P, V>>
 }
 
 /**
@@ -69,17 +69,17 @@ public abstract class AbstractPivotIterator<out E, P : Comparable<P>, out V>(
     private val revertible: RevertibleIterator<E, P>,
     private val init: (P) -> V
 ) : PivotIterator<E, P, V>, RevertibleIterator<E, P> {
-    private var cursor: Pivot<P, V>? = null
+    private var cursor: DataPivot<P, V>? = null
 
     final override fun here(): V {
         val position = revertible.position()
         val node = cursor?.getOrInsert(revertible.position()) { init(position) }
-            ?: Pivot(revertible.position(), init(position))
+            ?: DataPivot(revertible.position(), init(position))
         this.cursor = node
         return node.value
     }
 
-    final override fun pivots(): List<Pivot<P, V>> = cursor.toList()
+    final override fun pivots(): List<DataPivot<P, V>> = cursor.toArrayList()
     final override fun toString(): String = revertible.toString()
     final override fun hashCode(): Int = revertible.hashCode()
 }

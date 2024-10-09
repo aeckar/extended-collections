@@ -2,8 +2,6 @@
 
 package io.github.aeckar.collections
 
-// Immutable versions unnecessary, because performance impact is negligible
-
 private const val DEFAULT_SIZE = 10 // Default size of Java list
 private const val GROWTH_FACTOR = 2
 

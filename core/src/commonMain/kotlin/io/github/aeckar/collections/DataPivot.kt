@@ -1,19 +1,42 @@
 package io.github.aeckar.collections
 
+// ------------------------------ factories ------------------------------
+
 /**
- * Returns a [linker][link] for a [Pivot].
+ *
  */
-public fun <P : Comparable<P>, V> pivots(): (Pair<P, V>) -> Pivot<P, V> = { Pivot(it.first, it.second) }
+public fun pivotListOf();
+
+/**
+ *
+ */
+public fun pivotListOf()
+
+// ------------------------------ implementation ------------------------------
 
 /**
  * An object containing a position and a value.
  * @param position the location of this in some larger object
  * @param value a value specific to the location of this
  */
-public data class Pivot<P : Comparable<P>, out V>(
+public class DataPivot<P : Comparable<P>, V> internal constructor(
     public val position: P,
     override val value: V
-) : ListNode<Pivot<P, @UnsafeVariance V>>(), ValueNode<V> {
+) : ListNode<DataPivot<P, V>>(), DataNode<V> {
+    /**
+     * Returns true if both positions and values are equal.
+     */
+    override fun equals(other: Any?): Boolean {
+        return other is DataPivot<*, *> && position == other.position && value == other.value
+    }
+
+    override fun hashCode(): Int {
+        var result = 31
+        result = 31 * result + position.hashCode()
+        result = 31 * result + value.hashCode()
+        return result
+    }
+
     override fun toString(): String = "$value @ $position"
 }
 
@@ -22,12 +45,12 @@ public data class Pivot<P : Comparable<P>, out V>(
  *
  * If one does not exist, it is inserted according to the ordering of [P].
  */
-public fun <V, P : Comparable<P>> Pivot<P, V>.getOrInsert(position: P, lazyValue: () -> V): Pivot<P, V> {
+public fun <V, P : Comparable<P>> DataPivot<P, V>.getOrInsert(position: P, lazyValue: () -> V): DataPivot<P, V> {
     /**
      * Assumes positions are not equal.
      */
-    fun Pivot<P, V>.insert(): Pivot<P, V> {
-        val pivot = Pivot(position, lazyValue())
+    fun DataPivot<P, V>.insert(): DataPivot<P, V> {
+        val pivot = DataPivot(position, lazyValue())
         if (this.position > position) {
             insertBefore(pivot)
         } else {

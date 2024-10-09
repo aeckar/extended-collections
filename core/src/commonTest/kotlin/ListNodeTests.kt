@@ -1,5 +1,5 @@
 import io.github.aeckar.collections.*
-import io.github.aeckar.collections.Pivot
+import io.github.aeckar.collections.DataPivot
 import io.github.aeckar.collections.getOrInsert
 import io.github.aeckar.collections.pivots
 import kotlin.collections.reversed
@@ -14,8 +14,8 @@ private data class SimpleListNode(val ordinal: Int) : ListNode<SimpleListNode>()
 
 class ListNodeTests {
     @Test
-    fun get_and_insert_pivot() {
-        val initial = Pivot(1, "head")
+    fun get_or_insert_pivot() {
+        val initial = DataPivot(1, "head")
         check(initial.getOrInsert(1) { "first" } === initial)
         initial.apply {
             getOrInsert(-8) { "negative eighth" }
@@ -39,7 +39,7 @@ class ListNodeTests {
         head.insertAfter(SimpleListNode(-1))
         assertContentEquals(
             expected = listOf(0, -1, 1, 2),
-            actual = head.toList().map { it.ordinal }
+            actual = head.next().toArrayList().map { it.ordinal }   // Position unimportant when using `toArrayList`
         )
     }
 
@@ -52,7 +52,7 @@ class ListNodeTests {
         tail.insertBefore(SimpleListNode(-1))
         assertContentEquals(
             expected = listOf(0, -1, 1, 2),
-            actual = tail.reversed().toList().map { it.ordinal }
+            actual = tail.reversed().map { it.ordinal }
         )
     }
 
@@ -87,17 +87,18 @@ class ListNodeTests {
         link(pivots(), 1 to "first", 2 to "second", 3 to "third", 4 to "fourth").head().apply {
             assertEquals("second", seek { it.position == 2 }.value)
             assertEquals("third", seek { it.position == 3 }.value)
-            assertEquals("fourth", seek { false }.value)
+            assertEquals("fourth", seek { false }.value)    // Same as call to  `tail`
         }
 
     }
 
     @Test
     fun backward_search_or_first() {
+
         link(pivots(), 1 to "first", 2 to "second", 3 to "third", 4 to "fourth").tail().apply {
             assertEquals("third", backtrace { it.position == 3 }.value)
             assertEquals("second", backtrace { it.position == 2 }.value)
-            assertEquals("first", backtrace { false }.value)
+            assertEquals("first", backtrace { false }.value)    // Same as call to `head`
         }
     }
 

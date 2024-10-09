@@ -7,7 +7,7 @@ import kotlin.experimental.ExperimentalTypeInference
 /**
  * Returns a mutable tree node containing the given value.
  */
-public fun <V> treeNodeOf(value: V): DataTreeNode<V> = DataTreeNode(value)
+public fun <V> linkedTreeOf(value: V): DataTreeNode<V> = DataTreeNode(value)
 
 /**
  * Returns a read-only view of a tree whose nodes contain the given values.
@@ -20,10 +20,10 @@ public inline fun <V> buildTree(
     return DataTreeNode(rootValue).apply(builder).readOnly()
 }
 
-// ------------------------------ interface & implementation ------------------------------
+// ------------------------------ interfaces ------------------------------
 
 /**
- * An element in a tree.
+ * A node in some larger, singly-linked tree.
  *
  * Unlike in Java, this library does not provide a dedicated tree class.
  * Instead, tree nodes are operated on directly.
@@ -140,6 +140,11 @@ public interface TreeNode<Self : TreeNode<Self>> : Iterable<Self> {
         }
     }
 
+    /**
+     * Returns a string describing the state contained by this tree node.
+     */
+    override fun toString(): String
+
     public companion object {
         /**
          * Can be passed to [treeString] so that the lines in the returned string are made of UTF-8 characters.
@@ -154,49 +159,61 @@ public interface TreeNode<Self : TreeNode<Self>> : Iterable<Self> {
 }
 
 /**
- * A value-containing tree node whose children can be modified.
+ * A tree node whose children can be modified.
  */
-// @ConsistentCopyVisibility    Add when KT-71655 is fixed
-public data class DataTreeNode<out V> @PublishedApi internal constructor(
-    override val value: V
-) : ValueTreeNode<V> {
-    override val children: MutableList<DataTreeNode<@UnsafeVariance V>> = mutableListOf()
+public interface MutableTreeNode<Self : MutableTreeNode<Self>> : TreeNode<Self> {
+    override val children: MutableList<Self>
+
     /**
      * Appends the given element as a tree node to this one.
-     * @return the receiver node
+     * @return this node
      */
-    public operator fun rangeTo(node: DataTreeNode<@UnsafeVariance V>): DataTreeNode<V> {
+    public operator fun plus(node: Self): MutableTreeNode<Self> {
         return this.also { children.add(node) }
     }
 
     /**
      * Appends the given element as a tree node to this one.
-     * @return the receiver node
      */
-    public operator fun rangeTo(value: @UnsafeVariance V): DataTreeNode<V> {
+    public operator fun plusAssign(node: Self) {
+        children.add(node)
+    }
+}
+
+// ------------------------------ implementation ------------------------------
+
+/**
+ * A value-containing tree node whose children can be modified.
+ */
+public class DataTreeNode<V> @PublishedApi internal constructor(
+    override val value: V
+) : MutableTreeNode<DataTreeNode<@UnsafeVariance V>>, DataNode<V> {
+    override val children: MutableList<DataTreeNode<@UnsafeVariance V>> = mutableListOf()
+
+    /**
+     * Appends the given element, as a tree node, to this one.
+     * @return this node
+     */
+    public operator fun plus(value: V): DataTreeNode<V> {
         return this.also { children.add(DataTreeNode(value)) }
     }
 
     /**
-     * Appends the given element as a tree node to this one.
+     * Appends the given element, as a tree node, to this one.
      */
-    public operator fun plusAssign(node: DataTreeNode<@UnsafeVariance V>) {
-        children.add(node)
-    }
-
-    /**
-     * Appends the given element as a tree node to this one.
-     */
-    public operator fun plusAssign(value: @UnsafeVariance V) {
+    public operator fun plusAssign(value: V) {
         children.add(DataTreeNode(value))
     }
 
-    /**
-     * Returns a tree node whose value is the receiver, whose only child containing the given value.
-     */
-    public operator fun @UnsafeVariance V.rangeTo(childValue: @UnsafeVariance V): DataTreeNode<V> {
-        return treeNodeOf(this)..childValue
+    override fun equals(other: Any?): Boolean {
+        if (other !is DataTreeNode) {
+
+        }
     }
 
-    override fun toString(): String = value.toString()
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+
+    override fun toString(): String = "{ $value }"
 }

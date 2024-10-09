@@ -1,13 +1,13 @@
-import io.github.aeckar.collections.treeNodeOf
+import io.github.aeckar.collections.linkedTreeOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class TreeNodeTests {
-    private val tree = treeNodeOf(4)
+    private val tree = linkedTreeOf(4)
 
     init {
         tree += 0
-        tree += treeNodeOf(2)..1
+        tree += linkedTreeOf(2)..1
         tree += 3
     }
 
